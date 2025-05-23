@@ -1,0 +1,46 @@
+.chatMessage {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+
+    &.human {
+        .messageBubble {
+            align-self: flex-end;
+            background: #eee;
+            color: #111;
+        }
+    }
+
+    &.ai {
+        .messageBubble {
+            align-self: flex-start;
+            background: #222;
+            color: #eee;
+        }
+    }
+
+    .messageBubble {
+        padding: 1em;
+        border-radius: 8px;
+        max-width: 70%;
+        white-space: pre-wrap;
+    }
+
+    .blinkingCursor {
+        display: inline-block;
+        margin-left: 4px;
+        animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .feedback {
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+}
