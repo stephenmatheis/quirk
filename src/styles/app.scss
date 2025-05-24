@@ -1,32 +1,23 @@
+@font-face {
+    font-family: 'DepartureMono';
+    src: url('/fonts/DepartureMono.woff') format('woff2');
+    font-style: normal;
+    font-weight: 400;
+}
+
 :root {
-    --font-nunito: 'Nunito Variable', sans-serif;
+    --font-nunito: 'DepartureMono', sans-serif;
     --border-radius: 24px;
 }
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background-color: #f8f8ff;
-        --container-color: white;
-        --button-background: #f4f6fe;
-        --color: #221d29;
-        --color-medium: #5f6b7a;
-        --primary: #3f6def;
-        --primary-border: #87a4f5;
-        --primary-light: #ecefff;
-        --primary-medium: #ecefff;
-        --border-color: #d1d5db;
-        --primary-dark: #40509f;
+        --background-color: #101010;
+        --container-color: crimson;
+        --color: #39ff14;
+        --primary: #39ff14;
         --accent: #ff4554;
-        --secondary: #23d5ab;
-        --secondary-medium: #16856b;
-        --accent-light: #ffe8ea;
-        --accent-button-background: #fff3f4;
-        --success-light: #e9faf2;
-        --success: #1baa64;
-        --muted: #999999;
-        --muted-dark: #757575;
-        --muted-light: #d0d0d0;
-        --chat-color: white;
+        --muted: #f1f1f3;
     }
 
     html {
@@ -39,14 +30,10 @@
         --background-color: #181818;
         --container-color: #1f1f1f;
         --color: #f5f5f5;
-        --primary: #6680ff;
-        --primary-light: #303030;
-        --primary-medium: #3e3944;
-        --primary-dark: #8393e9;
+        --primary: #3f6def;
         --accent: #ff4554;
+        --muted: #999999;
         --muted: #d4d4d4;
-        --chat-color: white;
-        --button-background: #303030;
     }
 
     html {
@@ -66,8 +53,8 @@
     }
 
     &::selection {
-        color: var(--primary);
-        background-color: var(--primary-medium);
+        color: var(--background-color);
+        background-color: var(--primary);
     }
 }
 

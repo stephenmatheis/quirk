@@ -1,7 +1,7 @@
 import { Dispatch, DragEvent, SetStateAction, useRef, useState } from 'react';
 import classNames from 'classnames';
-import styles from './chat.module.scss';
-import { ChatBotHistoryItem } from './types';
+import { ChatBotHistoryItem } from '@/types/types';
+import styles from './chat-input-panel.module.scss';
 
 const fileExtensions = new Set([
     '.csv',
@@ -25,25 +25,13 @@ const fileExtensions = new Set([
     '.xml',
 ]);
 
-type ReceiveMessagesPayload = {
-    value: {
-        data: {
-            receiveMessages: {
-                sessionId: string;
-                data: string;
-            };
-        };
-    };
-};
-
 type ChatInputPanelProps = {
     running: boolean;
     setRunning: Dispatch<SetStateAction<boolean>>;
-    messageHistory: ChatBotHistoryItem[];
     setMessageHistory: Dispatch<SetStateAction<ChatBotHistoryItem[]>>;
 };
 
-export function ChatInputPanel({ running, setRunning, messageHistory, setMessageHistory }: ChatInputPanelProps) {
+export function ChatInputPanel({ running, setRunning, setMessageHistory }: ChatInputPanelProps) {
     const [prompt, setPrompt] = useState<string>('');
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -96,11 +84,25 @@ export function ChatInputPanel({ running, setRunning, messageHistory, setMessage
         if (running || !prompt.trim()) return;
 
         setPrompt('');
+        setRunning(true);
+
+        // Simulate sending a message
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        setRunning(false);
+
+        setMessageHistory((prev) => [
+            ...prev,
+            {
+                type: 'human',
+                content: prompt,
+            },
+        ]);
     }
 
     return (
         <>
-            <div className={styles['chat-prompt-container']}>
+            <div className={styles['chat-input-panel']}>
                 {/* Field */}
                 <div className={styles['chat-prompt-field']}>
                     {/* Textarea */}
@@ -138,13 +140,27 @@ export function ChatInputPanel({ running, setRunning, messageHistory, setMessage
                                 {/* Paperclip icon */}
                                 <span>
                                     <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
+                                        width="33"
+                                        height="32"
+                                        viewBox="0 0 33 32"
                                         fill="currentColor"
-                                        viewBox="0 0 16 16"
+                                        xmlns="http://www.w3.org/2000/svg"
                                     >
-                                        <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0z" />
+                                        <path d="M24.4701 14.475H22.9401V25.145H24.4701V14.475Z" />
+                                        <path d="M22.94 25.145H21.42V26.675H22.94V25.145Z" />
+                                        <path d="M21.4201 26.675H19.9001V28.195H21.4201V26.675Z" />
+                                        <path d="M21.4201 5.33496H19.9001V22.095H21.4201V5.33496Z" />
+                                        <path d="M19.9001 22.095H18.3701V23.625H19.9001V22.095Z" />
+                                        <path d="M19.9001 3.815H18.3701V5.335H19.9001V3.815Z" />
+                                        <path d="M19.9 28.1949H13.8V29.7149H19.9V28.1949Z" />
+                                        <path d="M18.3701 23.625H16.8501V25.145H18.3701V23.625Z" />
+                                        <path d="M16.8501 22.095H15.3201V23.625H16.8501V22.095Z" />
+                                        <path d="M15.32 9.90497H13.8V22.095H15.32V9.90497Z" />
+                                        <path d="M18.3702 2.28497H12.2802V3.81497H18.3702V2.28497Z" />
+                                        <path d="M13.8002 26.675H12.2802V28.195H13.8002V26.675Z" />
+                                        <path d="M12.2801 25.145H10.7501V26.675H12.2801V25.145Z" />
+                                        <path d="M12.2801 3.815H10.7501V5.335H12.2801V3.815Z" />
+                                        <path d="M10.7501 5.33496H9.2301V25.145H10.7501V5.33496Z" />
                                     </svg>
                                 </span>
 
@@ -171,43 +187,10 @@ export function ChatInputPanel({ running, setRunning, messageHistory, setMessage
                             })}
                             onClick={handleSendMessage}
                         >
-                            <span>
-                                <svg
-                                    className={styles.send}
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5"
-                                    />
-                                </svg>
-                            </span>
+                            <span>{'\u2191'}</span>
                         </button>
                     </div>
                 </div>
-            </div>
-            {/* Example prompts */}
-            <div className={styles.examples}>
-                {['Create a list', 'Summarize tasks', 'Teach me', 'Organize notes'].map((example) => (
-                    <button key={example} className={styles.example} onClick={() => setPrompt(example)}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m4-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5"
-                            />
-                        </svg>
-                        <span>{example}</span>
-                    </button>
-                ))}
             </div>
         </>
     );
