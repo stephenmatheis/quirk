@@ -6,8 +6,9 @@
 }
 
 :root {
-    --font-nunito: 'DepartureMono', sans-serif;
+    --font-family: 'DepartureMono', sans-serif;
     --border-radius: 24px;
+    --header-height: 44px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -43,13 +44,20 @@
 
 * {
     box-sizing: border-box;
-    font-family: var(--font-nunito) !important;
 
-    & {
-        --scrollbar-color-track: transparent;
-        --scrollbar-color-thumb: var(--primary);
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
 
-        scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--primary);
+        border-radius: 0;
+        border: 1px solid transparent;
+        background-clip: content-box;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
     }
 
     &::selection {
@@ -60,7 +68,7 @@
 
 html,
 body {
-    font-family: var(--font-nunito);
+    font-family: var(--font-family);
     background-color: var(--background-color);
     color: var(--color);
 }
@@ -101,7 +109,6 @@ button {
     }
 }
 
-// Global
 .full-page {
     display: flex;
     flex-direction: column;
@@ -111,287 +118,4 @@ button {
     height: 100dvh;
     margin: 0 auto;
     overflow: hidden;
-}
-
-// Auth
-.auth-panel {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: auto;
-    height: 100dvh;
-
-    [data-amplify-router] {
-        background-color: transparent !important;
-        box-shadow: none !important;
-        border-color: none !important;
-        border-width: none !important;
-        border-style: none !important;
-    }
-
-    [data-amplify-container] {
-        min-width: fit-content;
-        border-radius: 1rem;
-        background-color: var(--container-color);
-        padding: 2rem;
-        box-shadow: 0px 0.5px 2px 1px rgba(0, 0, 0, 0.09);
-
-        .amplify-heading {
-            font-size: 2rem;
-            color: var(--primary);
-            font-weight: 900;
-            margin-top: 0;
-            margin-bottom: 2rem;
-        }
-
-        form {
-            margin-bottom: 1em;
-            width: 40ch;
-            padding: 0;
-
-            fieldset {
-                border: none;
-                gap: 1;
-                padding: 0;
-                margin: 0;
-            }
-        }
-
-        [data-amplify-footer] {
-            padding: 0;
-
-            button {
-                width: 100%;
-            }
-        }
-
-        // From AWS
-        .amplify-button {
-            align-items: center;
-            justify-content: center;
-            background-color: var(--container-color);
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            display: inline-flex;
-            user-select: none;
-            padding: 1em;
-            border-radius: 1rem;
-
-            &.amplify-button--link {
-                color: var(--accent);
-                font-weight: 600 !important;
-                background-color: transparent;
-                padding: 0;
-            }
-
-            &[type='submit'] {
-                justify-content: center;
-                font-weight: 700;
-            }
-
-            &[aria-label='Show password'] {
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-
-            &.amplify-button--primary {
-                font-size: 14px;
-            }
-
-            &.oidc-sign-in-button {
-                width: 100%;
-                margin: 2rem 0;
-                background-color: var(--primary);
-                color: var(--container-color);
-            }
-
-            .amplify-icon {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                fill: currentColor;
-                height: 22px !important;
-                width: 22px !important;
-                height: 1em;
-                line-height: 1;
-
-                svg {
-                    height: 100%;
-                    width: 100%;
-                }
-            }
-        }
-
-        .amplify-field-group__outer-end {
-            button {
-                border-radius: 1rem;
-            }
-        }
-
-        .amplify-visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            fill: transparent;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-
-        .amplify-flex {
-            display: flex;
-        }
-
-        .amplify-field {
-            flex-direction: column;
-
-            .amplify-label {
-                margin-bottom: 0.5em;
-                font-weight: 700;
-            }
-
-            .amplify-field-group--horizontal {
-                flex-direction: row;
-            }
-
-            .amplify-field-group {
-                gap: 0.5em;
-                height: 50px;
-
-                .amplify-field-group__field-wrapper {
-                    position: relative;
-                    width: 100%;
-
-                    input {
-                        outline: none !important;
-                        border: none !important;
-                        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09) !important;
-                        width: 100%;
-                        padding: 0.5em 1em;
-                        font-size: 1em;
-                        font-family: var(--font-nunito);
-                        background-color: var(--background-color);
-                        border-radius: 1rem;
-                        height: 100%;
-
-                        &::placeholder {
-                            color: transparent;
-                        }
-
-                        &:focus {
-                            background-color: var(--primary-light);
-                            outline: none;
-                            border: none;
-                            box-shadow: none;
-                        }
-
-                        &[name='username'] {
-                            text-transform: lowercase;
-                        }
-                    }
-                }
-            }
-        }
-
-        .amplify-alert--error {
-            color: #660000;
-            background-color: #fce9e9;
-
-            &.amplify-alert {
-                align-items: center;
-                justify-content: space-between;
-                padding: 0.5em;
-            }
-        }
-    }
-}
-
-.sign-up-heading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-// Avatar
-.avatar {
-    --radius: 50%;
-    --size: 20px;
-
-    height: var(--size);
-    width: var(--size);
-    border-radius: var(--radius);
-    background-color: var(--primary-medium);
-    color: var(--primary);
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--container-color);
-        font-weight: 900;
-        font-size: 12px;
-        width: var(--size);
-        height: var(--size);
-        border-radius: var(--radius);
-        background: #a4a4a4;
-    }
-}
-
-// Popover
-.menu {
-    padding: 0.5rem 0;
-
-    &.wide {
-        min-width: 280px;
-    }
-
-    .divider {
-        margin-bottom: 0.25rem;
-        margin-top: 0.25rem;
-        margin-left: 1.25rem;
-        margin-right: 1.25rem;
-        background-color: rgba(0, 0, 0, 0.1);
-        height: 1px;
-    }
-
-    .item {
-        cursor: pointer;
-        user-select: none;
-        padding: 0.75rem;
-        margin: 0 0.5rem;
-        border-radius: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 14px;
-
-        &.red {
-            color: #f93a37;
-
-            svg {
-                fill: #f93a37;
-            }
-        }
-
-        svg {
-            width: 18px;
-            height: 18px;
-            fill: #7d7d7d;
-        }
-
-        &:hover {
-            background-color: var(--button-background);
-        }
-    }
 }

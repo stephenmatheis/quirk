@@ -8,14 +8,15 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0.5rem 1rem;
+    height: var(--header-height);
+    padding: 1rem;
     background-color: var(--background-color);
     z-index: 1000;
 
     .title {
         display: flex;
         align-items: center;
-        font-size: 1.25rem;
+        font-size: 1rem;
         font-weight: 900;
         color: var(--primary);
         gap: 0.5rem;

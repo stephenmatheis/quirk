@@ -1,19 +1,45 @@
 .chat-input-panel {
     display: flex;
-    align-items: center;
     gap: 1rem;
     padding: 1rem 0;
-    border-top: solid 1px var(--primary);
+    line-height: 21px;
+
+    position: relative;
+
+    &::before {
+        content: '────────────────────────────────────────────────────────────';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 60ch;
+    }
+
+    &.bottom {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 60ch;
+    }
+
+    .prompt {
+        display: inline-block;
+        height: 21px;
+    }
 
     .chat-input {
-        width: 100%;
         font-family: var(--font-nunito);
-        resize: none;
         margin: 0;
+        padding: 0;
         border: none;
         background: none;
         color: var(--primary);
-
+        overflow: auto;
+        resize: none;
+        width: 100%;
+        line-height: 21px;
 
         &:focus {
             outline: none;
